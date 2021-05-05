@@ -46,7 +46,7 @@ function createField(cjs, f) {
     f.id = 'cjs_' + f.name;
     f.container = createFieldContainer(f);
 
-    cjs.Form.append(f.container);
+    cjs.form.append(f.container);
 
     if(f.type == "text" || f.type == "email") {
         createFieldInput(f);
@@ -61,18 +61,43 @@ function createField(cjs, f) {
 CrudJS.BuildForm = function(id, options) {
     console.log("Building form...");
 
-    const form = createElement('form');
+    // const form = createElement('form');
 
-    const cjs = {
-        Id: id,
-        Options: options,
-        Container: $('#'+id),
-        Form: form
-    }    
+    // const cjs = {
+    //     Id: id,
+    //     Options: options,
+    //     Container: $('#'+id),
+    //     Form: form
+    // }    
 
-    options.fields.forEach(f => createField(cjs, f));
+    // options.fields.forEach(f => createField(cjs, f));
 
-    cjs.Container.append(cjs.Form);
+    // cjs.Container.append(cjs.Form);
+    // return cjs;
 
-    return cjs;
+    const form = new CrudForm(id, options);
+    form.build();
+    form.render();
+    return form;
+}
+
+
+class CrudForm {
+    constructor(id, options) {
+        this.id = id;
+        this.options = options;
+        this.fields = [];
+        this.container = null;
+        this.form = null;
+    }
+  
+    build() {
+        this.form = createElement('form');
+        this.container = $('#'+this.id);
+        this.options.fields.forEach(f => createField(this, f));
+    };
+  
+    render() {
+        this.container.append(this.form);
+    };
 }
