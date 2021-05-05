@@ -4,7 +4,7 @@ function createElement(e) {
     return $(document.createElement(e));
 }
 
-function createFieldInput(cjs, f) {
+function createFieldInput(f) {
     const input = createElement('input');
     input.addClass('form-control');
     input.attr('type', f.type);
@@ -13,6 +13,18 @@ function createFieldInput(cjs, f) {
     if(f.placeholder) input.attr('placeholder', f.placeholder);
 
     f.container.append(input);
+}
+
+function createFieldTextarea(f) {
+    const textarea = createElement('textarea');
+    textarea.addClass('form-control');
+    textarea.attr('id', f.id);
+
+    if(f.rows) textarea.attr('rows', f.rows);
+
+    if(f.placeholder) textarea.attr('placeholder', f.placeholder);
+
+    f.container.append(textarea);
 }
 
 function createFieldContainer(f) {
@@ -37,7 +49,11 @@ function createField(cjs, f) {
     cjs.Form.append(f.container);
 
     if(f.type == "text" || f.type == "email") {
-        createFieldInput(cjs, f);
+        createFieldInput(f);
+        return;
+    }
+    if(f.type == "textarea") {
+        createFieldTextarea(f);
         return;
     }
 }
