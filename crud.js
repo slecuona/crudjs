@@ -10,6 +10,8 @@ function createFieldInput(cjs, f) {
     input.attr('type', f.type);
     input.attr('id', f.id);
 
+    if(f.placeholder) input.attr('placeholder', f.placeholder);
+
     f.container.append(input);
 }
 
@@ -34,7 +36,7 @@ function createField(cjs, f) {
 
     cjs.Form.append(f.container);
 
-    if(f.type == "text") {
+    if(f.type == "text" || f.type == "email") {
         createFieldInput(cjs, f);
         return;
     }
