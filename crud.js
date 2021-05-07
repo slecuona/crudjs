@@ -26,8 +26,17 @@ class CrudForm {
         this.form = CrudJS.CreateElement('form');
         this.container = $('#'+this.id);
 
-        this.options.fields.forEach(f => 
-            this.fields.push(new CrudFormField(f)));
+        this.options.fields.forEach(f => {
+            const type = f.type;
+            var field;
+            if(type == "text" || type == "email") {
+                field = new CrudFormFieldInput(f);
+            }
+            if(type == "textarea") {
+                field = new CrudFormFieldTextarea(f);
+            }
+            this.fields.push(field);
+        });
 
         this.fields.forEach(f => 
             f.build());
@@ -42,7 +51,7 @@ class CrudForm {
     };
 }
 
-class CrudFormField {
+class CrudFormFieldBase {
     constructor(options) {
         this.options = options;
         this.id = 'cjs_field_' + this.options.name;
@@ -67,17 +76,22 @@ class CrudFormField {
     };
 
     buildControl() {
-        const type = this.options.type;
-        if(type == "text" || type == "email") {
-            return this.buildInput();
-        }
-        if(type == "textarea") {
-            return this.buildTextarea();
-        }
         return null;
     }
 
-    buildInput() {
+    render() {
+        this.container.append(this.label);
+        this.container.append(this.control);
+    }
+}
+
+
+class CrudFormFieldInput extends CrudFormFieldBase {
+    constructor(options) {
+        super(options);
+    }
+  
+    buildControl() {
         const input = CrudJS.CreateElement('input');
         input.addClass('form-control');
         input.attr('type', this.options.type);
@@ -88,8 +102,14 @@ class CrudFormField {
         
         return input;
     }
+}
 
-    buildTextarea() {
+class CrudFormFieldTextarea extends CrudFormFieldBase {
+    constructor(options) {
+        super(options);
+    }
+  
+    buildControl() {
         const textarea = CrudJS.CreateElement('textarea');
         textarea.addClass('form-control');
         textarea.attr('id', this.id);
@@ -101,10 +121,5 @@ class CrudFormField {
             textarea.attr('placeholder', this.options.placeholder);
     
         return textarea;
-    }
-
-    render() {
-        this.container.append(this.label);
-        this.container.append(this.control);
     }
 }
