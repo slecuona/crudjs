@@ -1,0 +1,23 @@
+{
+  "name": "crudjs",
+  "version": "1.0.0",
+  "description": "* [Bootstrap 5.0](https://getbootstrap.com/docs/5.0)\r * [JQuery 3.6](https://api.jquery.com/)",
+  "main": "crud.js",
+  "dependencies": {
+    "@types/jquery": "^3.5.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slecuona/crudjs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slecuona/crudjs/issues"
+  },
+  "homepage": "https://github.com/slecuona/crudjs#readme"
+}
