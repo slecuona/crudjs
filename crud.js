@@ -1,125 +1,157 @@
-const CrudJS = {};
-
-CrudJS.CreateElement = function(e) {
-    return $(document.createElement(e));
-}
-
-CrudJS.BuildForm = function(id, options) {
-    console.log("Building form...");
-
-    const form = new CrudForm(id, options);
-    form.build();
-    form.render();
-    return form;
-}
-
-class CrudForm {
-    constructor(id, options) {
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var CrudJS = /** @class */ (function () {
+    function CrudJS() {
+    }
+    CrudJS.BuildForm = function (id, options) {
+        console.log("Building form...");
+        var form = new CrudForm(id, options);
+        form.build();
+        form.render();
+        return form;
+    };
+    CrudJS.CreateElementForm = function (elem) {
+        return $(document.createElement(elem));
+    };
+    return CrudJS;
+}());
+var CrudForm = /** @class */ (function () {
+    function CrudForm(id, options) {
         this.id = id;
         this.options = options;
         this.fields = [];
         this.container = null;
         this.form = null;
     }
-  
-    build() {
-        this.form = CrudJS.CreateElement('form');
-        this.container = $('#'+this.id);
-
-        this.options.fields.forEach(f => {
-            const type = f.type;
+    CrudForm.prototype.build = function () {
+        var _this = this;
+        this.form = CrudJS.CreateElementForm('form');
+        this.container = $('#' + this.id);
+        this.options.fields.forEach(function (f) {
+            var type = f.type;
             var field;
-            if(type == "text" || type == "email") {
+            if (type == "text" || type == "email") {
                 field = new CrudFormFieldInput(f);
             }
-            if(type == "textarea") {
+            if (type == "textarea") {
                 field = new CrudFormFieldTextarea(f);
             }
-            this.fields.push(field);
+            f.attributes.forEach(function (element) {
+                if (element.type == "col") {
+                    var crudAux = void 0;
+                    crudAux = field;
+                    field = new CrudFormFieldAttibuteCol(f, crudAux);
+                }
+            });
+            _this.fields.push(field);
         });
-
-        this.fields.forEach(f => 
-            f.build());
+        this.fields.forEach(function (f) {
+            return f.build();
+        });
     };
-  
-    render() {
-        this.fields.forEach(f => 
-            f.render());
-        this.fields.forEach(f => 
-            this.form.append(f.container));
+    ;
+    CrudForm.prototype.render = function () {
+        var _this = this;
+        this.fields.forEach(function (f) {
+            return f.render();
+        });
+        this.fields.forEach(function (f) {
+            return _this.form.append(f.container);
+        });
         this.container.append(this.form);
     };
-}
-
-class CrudFormFieldBase {
-    constructor(options) {
+    ;
+    return CrudForm;
+}());
+var CrudFormFieldBase = /** @class */ (function () {
+    function CrudFormFieldBase(options) {
         this.options = options;
         this.id = 'cjs_field_' + this.options.name;
         this.container = null;
         this.control = null;
         this.label = null;
     }
-  
-    build() {
+    CrudFormFieldBase.prototype.build = function () {
         this.buildContainer();
         this.control = this.buildControl();
     };
-
-    buildContainer() {
-        this.container = CrudJS.CreateElement('div');
+    ;
+    CrudFormFieldBase.prototype.buildContainer = function () {
+        this.container = CrudJS.CreateElementForm('div');
         this.container.addClass('mb-3');
-    
-        this.label = CrudJS.CreateElement('label');
+        this.label = CrudJS.CreateElementForm('label');
         this.label.addClass('form-label');
         this.label.attr('for', this.id);
         this.label.html(this.options.label);
     };
-
-    buildControl() {
+    ;
+    CrudFormFieldBase.prototype.buildControl = function () {
         return null;
-    }
-
-    render() {
+    };
+    CrudFormFieldBase.prototype.render = function () {
         this.container.append(this.label);
         this.container.append(this.control);
+    };
+    return CrudFormFieldBase;
+}());
+var CrudFormFieldInput = /** @class */ (function (_super) {
+    __extends(CrudFormFieldInput, _super);
+    function CrudFormFieldInput(options) {
+        return _super.call(this, options) || this;
     }
-}
-
-
-class CrudFormFieldInput extends CrudFormFieldBase {
-    constructor(options) {
-        super(options);
-    }
-  
-    buildControl() {
-        const input = CrudJS.CreateElement('input');
+    CrudFormFieldInput.prototype.buildControl = function () {
+        var input = CrudJS.CreateElementForm('input');
         input.addClass('form-control');
         input.attr('type', this.options.type);
         input.attr('id', this.id);
-    
-        if(this.options.placeholder) 
+        if (this.options.placeholder)
             input.attr('placeholder', this.options.placeholder);
-        
         return input;
+    };
+    return CrudFormFieldInput;
+}(CrudFormFieldBase));
+var CrudFormFieldTextarea = /** @class */ (function (_super) {
+    __extends(CrudFormFieldTextarea, _super);
+    function CrudFormFieldTextarea(options) {
+        return _super.call(this, options) || this;
     }
-}
-
-class CrudFormFieldTextarea extends CrudFormFieldBase {
-    constructor(options) {
-        super(options);
-    }
-  
-    buildControl() {
-        const textarea = CrudJS.CreateElement('textarea');
+    CrudFormFieldTextarea.prototype.buildControl = function () {
+        var textarea = CrudJS.CreateElementForm('textarea');
         textarea.addClass('form-control');
         textarea.attr('id', this.id);
-    
-        if(this.options.rows) 
+        if (this.options.rows)
             textarea.attr('rows', this.options.rows);
-    
-        if(this.options.placeholder) 
+        if (this.options.placeholder)
             textarea.attr('placeholder', this.options.placeholder);
-    
         return textarea;
+    };
+    return CrudFormFieldTextarea;
+}(CrudFormFieldBase));
+var CrudFormFieldAttibuteCol = /** @class */ (function (_super) {
+    __extends(CrudFormFieldAttibuteCol, _super);
+    function CrudFormFieldAttibuteCol(options, _base) {
+        var _this = _super.call(this, options) || this;
+        _this.base = _base;
+        return _this;
     }
-}
+    CrudFormFieldAttibuteCol.prototype.buildControl = function () {
+        var control = this.base.buildControl();
+        control.attr('pepe', 6);
+        return control;
+    };
+    return CrudFormFieldAttibuteCol;
+}(CrudFormFieldBase));
