@@ -1,7 +1,0 @@
-{
-    "compilerOptions": {
-        "outFile": "out/crudjs.js"
-    },
-    "references": [
-    ]
-}

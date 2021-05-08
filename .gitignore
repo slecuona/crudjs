@@ -81,4 +81,4 @@ typings/
 
 package-lock.json
 
-out/
+src/crud.js

@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2015",
+        "removeComments": true
+    },
+    "references": [
+    ],
+    "files": [
+        "crud.ts"
+    ]
+}

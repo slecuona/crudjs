@@ -1,6 +1,6 @@
 //"use strict";
 
-class CrudJS {
+export class CrudJS {
     constructor(){}
 
     static BuildForm(id: any, options: any) {
@@ -15,6 +15,8 @@ class CrudJS {
     static CreateElementForm(elem:string):any {
         return $(document.createElement(elem));
     }
+
+    static foo:string = 'asdsd';
 }
 
 class CrudForm {
