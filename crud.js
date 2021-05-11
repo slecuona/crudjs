@@ -62,7 +62,7 @@ class CrudFormFieldBase {
   
     build() {
         this.buildContainer();
-        this.control = this.buildControl();
+        this.buildControl();
     };
 
     buildContainer() {
@@ -76,7 +76,24 @@ class CrudFormFieldBase {
     };
 
     buildControl() {
+        this.buildControlCustom();
+        
+        this.control.addClass('form-control');
+
+        // Aplico atributos genericos
+        this.control.attr('id', this.id);
+
+        // Aplico atributos dinamicos
+        for (const attr in this.options.attr) {
+            var val =  this.options.attr[attr];
+            this.control.attr(attr, val);
+        }
+
         return null;
+    }
+
+    buildControlCustom() {
+        return;
     }
 
     render() {
@@ -87,39 +104,24 @@ class CrudFormFieldBase {
 
 
 class CrudFormFieldInput extends CrudFormFieldBase {
-    constructor(options) {
-        super(options);
-    }
+    // constructor(options) {
+    //     super(options);
+    // }
   
-    buildControl() {
+    buildControlCustom() {
         const input = CrudJS.CreateElement('input');
-        input.addClass('form-control');
         input.attr('type', this.options.type);
-        input.attr('id', this.id);
-    
-        if(this.options.placeholder) 
-            input.attr('placeholder', this.options.placeholder);
-        
-        return input;
+        this.control = input;
     }
 }
 
 class CrudFormFieldTextarea extends CrudFormFieldBase {
-    constructor(options) {
-        super(options);
-    }
+    // constructor(options) {
+    //     super(options);
+    // }
   
-    buildControl() {
+    buildControlCustom() {
         const textarea = CrudJS.CreateElement('textarea');
-        textarea.addClass('form-control');
-        textarea.attr('id', this.id);
-    
-        if(this.options.rows) 
-            textarea.attr('rows', this.options.rows);
-    
-        if(this.options.placeholder) 
-            textarea.attr('placeholder', this.options.placeholder);
-    
-        return textarea;
+        this.control = textarea;
     }
 }
