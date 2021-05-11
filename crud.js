@@ -88,8 +88,6 @@ class CrudFormFieldBase {
             var val =  this.options.attr[attr];
             this.control.attr(attr, val);
         }
-
-        return null;
     }
 
     buildControlCustom() {
@@ -125,3 +123,7 @@ class CrudFormFieldTextarea extends CrudFormFieldBase {
         this.control = textarea;
     }
 }
+
+// Solo para Node (tests)
+if(typeof(module) !== "undefined")
+    module.exports = CrudFormFieldInput;
