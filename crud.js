@@ -125,5 +125,10 @@ class CrudFormFieldTextarea extends CrudFormFieldBase {
 }
 
 // Solo para Node (tests)
-if(typeof(module) !== "undefined")
-    module.exports = CrudFormFieldInput;
+if(typeof(module) !== "undefined") {
+    module.exports = {
+        CrudForm,
+        CrudFormFieldInput, 
+        CrudFormFieldTextarea
+    };
+}

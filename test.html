@@ -32,14 +32,16 @@
     
     <script>
         const formOptions = {
+            size: '', // sm / lg / (empty)
             fields: [
                 {
                     type: 'text',
                     name: 'string1',
                     label: 'Text 1',
+                    description: 'Description text here.',
                     attr: {
                         placeholder: 'Text placeholder'
-                    }                    
+                    }
                 },
                 {
                     type: 'email',
