@@ -39,6 +39,9 @@ describe("FormFields", function() {
             '</div>'+
             '<div class="mb-3"><button class="btn btn-primary">Guardar</button></div>'+
             '</form>');
+
+        let values = form.getValues();
+        assert.equal('', values.string1);
     });
     it("FieldInput", function() {
         let textField = new CrudFormFieldInput({

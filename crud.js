@@ -26,6 +26,11 @@ class CrudForm {
     
     build() {
         this.form = CrudJS.CreateElement('form');
+        const thisForm = this;
+        this.form.on('submit', e => {
+            e.preventDefault();
+            thisForm.onSubmit();
+        });
         this.container = $('#'+this.id);
 
         this.options.fields.forEach(f => {
@@ -65,11 +70,36 @@ class CrudForm {
         this.btnSubmit.html('Guardar');
         this.btnSubmit.addClass('btn btn-primary');
     }
+
+    getValues() {
+        var res = {};
+        this.fields.forEach(f => 
+            res[f.name] = f.getValue());
+        return res;
+    }
+
+    onSubmit() {
+        //loading(true); 
+        console.log(this.getValues());
+        return;
+        $.ajax({
+            url: this.options.submitUrl,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(this.getValues()),
+            success: handleSuccess
+        })
+        .fail(handleErrors)
+        .always(function() {
+            //loading(false); 
+        });
+    }
 }
 
 class CrudFormFieldBase {
     constructor(options) {
         this.options = options;
+        this.name = this.options.name;
         this.id = 'cjs_field_' + this.options.name;
         this.container = null;
         this.control = null;
@@ -113,6 +143,10 @@ class CrudFormFieldBase {
     render() {
         this.container.append(this.label);
         this.container.append(this.control);
+    }
+
+    getValue() {
+        return this.control.val();
     }
 }
 
