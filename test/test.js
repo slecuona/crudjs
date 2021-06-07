@@ -48,6 +48,7 @@ describe("FormFields", function() {
             type: 'text',
             name: 'string1',
             label: 'Text 1',
+            default: 'foo',
             attr: {
                 placeholder: 'Text placeholder'
             }                    
@@ -56,6 +57,8 @@ describe("FormFields", function() {
         let html = getHTML(textField.control);
         assert.equal(html, 
             '<input type="text" class="form-control" id="cjs_field_string1" placeholder="Text placeholder">');
+        
+        assert.equal('foo', textField.getValue());
     });
     it("FieldTextarea", function() {
         let textareaField = new CrudFormFieldTextarea({

@@ -134,6 +134,8 @@ class CrudFormFieldBase {
             var val =  this.options.attr[attr];
             this.control.attr(attr, val);
         }
+
+        this.control.val(this.options.default);
     }
 
     buildControlCustom() {
