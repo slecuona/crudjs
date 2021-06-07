@@ -36,7 +36,9 @@ describe("FormFields", function() {
             '<form><div class="mb-3">'+
             '<label class="form-label" for="cjs_field_string1">Text 1</label>'+
             '<input type="text" class="form-control" id="cjs_field_string1">'+
-            '</div></form>');
+            '</div>'+
+            '<div class="mb-3"><button class="btn btn-primary">Guardar</button></div>'+
+            '</form>');
     });
     it("FieldInput", function() {
         let textField = new CrudFormFieldInput({

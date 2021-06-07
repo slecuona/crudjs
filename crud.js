@@ -20,8 +20,10 @@ class CrudForm {
         this.fields = [];
         this.container = null;
         this.form = null;
+        this.btnSubmit = null;
+        this.footerContainer = null;
     }
-  
+    
     build() {
         this.form = CrudJS.CreateElement('form');
         this.container = $('#'+this.id);
@@ -40,15 +42,29 @@ class CrudForm {
 
         this.fields.forEach(f => 
             f.build());
+
+        this.footerContainer = CrudJS.CreateElement('div');
+        this.footerContainer.addClass('mb-3');
+
+        this.createBtnSubmit();
     };
-  
+    
+    // Se agregan los controles en los contenedores
     render() {
         this.fields.forEach(f => 
             f.render());
         this.fields.forEach(f => 
             this.form.append(f.container));
+        this.footerContainer.append(this.btnSubmit);
+        this.form.append(this.footerContainer)
         this.container.append(this.form);
     };
+
+    createBtnSubmit() {
+        this.btnSubmit = CrudJS.CreateElement('button');
+        this.btnSubmit.html('Guardar');
+        this.btnSubmit.addClass('btn btn-primary');
+    }
 }
 
 class CrudFormFieldBase {
