@@ -1,0 +1,33 @@
+{
+    "size": "",
+    "submitUrl": "",
+    "dataUrl": "",
+    "fields": [
+        {
+            "type": "text",
+            "name": "string1",
+            "label": "Text 1",
+            "description": "Description text here.",
+            "attr": {
+                "placeholder": "Text placeholder"
+            }
+        },
+        {
+            "type": "email",
+            "name": "email",
+            "label": "Email",
+            "attr": {
+                "placeholder": "super@email.com"
+            }
+        },
+        {
+            "type": "textarea",
+            "name": "textarea",
+            "label": "Text area",
+            "attr": {
+                "placeholder": "Row1\nRow2\nRow3\n",
+                "rows": 3
+            }
+        }
+    ]
+}

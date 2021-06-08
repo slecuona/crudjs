@@ -4,13 +4,35 @@ CrudJS.CreateElement = function(e) {
     return $(document.createElement(e));
 }
 
+CrudJS.LoadOptions = function(options, done) {
+    if(typeof options !== 'string') {
+        done(options);
+        return;
+    }
+    // 'options' es la url donde hay que buscar los options por ajax
+    $.ajax({
+        url: options,
+        method: 'GET',
+        type: 'json',
+        contentType: 'application/json',
+        success: function(res) {
+            done(res);
+        }
+    })
+    // .fail(handleErrors)
+    .always(function() {
+        //loading(false); 
+    });
+}
+
 CrudJS.BuildForm = function(id, options) {
     console.log("Building form...");
 
-    const form = new CrudForm(id, options);
-    form.build();
-    form.render();
-    return form;
+    CrudJS.LoadOptions(options, function(options) {
+        const form = new CrudForm(id, options);
+        form.build();
+        form.render();
+    });
 }
 
 class CrudForm {
@@ -23,7 +45,7 @@ class CrudForm {
         this.btnSubmit = null;
         this.footerContainer = null;
     }
-    
+
     build() {
         this.form = CrudJS.CreateElement('form');
         const thisForm = this;
