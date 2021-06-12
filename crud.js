@@ -44,6 +44,7 @@ class CrudForm {
         this.form = null;
         this.btnSubmit = null;
         this.footerContainer = null;
+        this.alert = null;
     }
 
     build() {
@@ -74,6 +75,8 @@ class CrudForm {
         this.footerContainer.addClass('mb-3');
 
         this.createBtnSubmit();
+
+        this.createAlert();
     };
     
     // Se agregan los controles en los contenedores
@@ -84,6 +87,7 @@ class CrudForm {
             this.form.append(f.container));
         this.footerContainer.append(this.btnSubmit);
         this.form.append(this.footerContainer)
+        this.container.append(this.alert);
         this.container.append(this.form);
     };
 
@@ -91,6 +95,24 @@ class CrudForm {
         this.btnSubmit = CrudJS.CreateElement('button');
         this.btnSubmit.html('Guardar');
         this.btnSubmit.addClass('btn btn-primary');
+    }
+
+    createAlert() {
+        this.alert = CrudJS.CreateElement('div');
+        this.alert.addClass('alert');
+        this.alert.attr('role', 'alert');
+        this.alert.hide();
+    }
+
+    showAlert(type, msg) {
+        this.alert.removeClass('alert-success');
+        this.alert.removeClass('alert-danger');
+        switch(type) {
+            case 0: this.alert.addClass('alert-success'); break;
+            case 1: this.alert.addClass('alert-danger'); break;
+        }
+        this.alert.html(msg);
+        this.alert.show();
     }
 
     getValues() {
@@ -103,6 +125,7 @@ class CrudForm {
     onSubmit() {
         //loading(true); 
         console.log(this.getValues());
+        this.showAlert(0, 'Sended!');
         return;
         $.ajax({
             url: this.options.submitUrl,
