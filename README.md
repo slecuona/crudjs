@@ -23,7 +23,7 @@ El objetivo principal es minimizar tiempo de desarrollo en interfaces CRUD autom
 
 # BuildForm
 
-Crea un formulario dentro deun  contenedor especifico utilizando un objeto de opciones.
+Crea un formulario dentro de un elemento contenedor específico utilizando un objeto de opciones.
 
 # Ejemplo
 
@@ -76,7 +76,7 @@ Dando como resultado:
 
 # Opciones por ajax
 
-Si en lugar de indicar un objeto en el segundo parametro, se especifica un string con una URL, se realiza una petición sobre esa dirección para recuperar las opciones del formulario (formato JSON).
+Si en lugar de indicar un objeto en el segundo parámetro, se especifica un string con una URL, se realiza una petición sobre esa dirección para recuperar las opciones del formulario (formato JSON).
 
 ```js
 CrudJS.BuildForm('crud-form', 'https://server.com/form-options.json');
@@ -102,5 +102,5 @@ Permite probar la recuperación del esquema de los formularios a través de ajax
 npm run demo
 ```
 
-Abrir en el navegador: `localhost:3001``
+Abrir en el navegador: `localhost:3001`
 
